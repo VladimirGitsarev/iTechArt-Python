@@ -5,13 +5,44 @@ import matplotlib.pyplot as plt
 import os
 
 def main():
-    lists = [[random.randint(0, 100) for i in range(10)] for i in range(3)]
-    for lst in lists:
-        print("Unsorted list:", *lst)
-    print("Bubble Sort:", *bubble_sort(lists[0]))
-    print("Insertion Sort:", *insertion_sort(lists[1]))
-    print("Quick Sort:", *quick_sort(lists[2]))
+    #lists = [[random.randint(0, 100) for i in range(10)] for i in range(3)]
+    #for lst in lists:
+    #    print("Unsorted list:", *lst)
+    #print("Bubble Sort:", *bubble_sort(lists[0]))
+    #print("Insertion Sort:", *insertion_sort(lists[1]))
+    #print("Quick Sort:", *quick_sort(lists[2]))
+    print("Squares:", squares(11, 3) - 1)
     
+def recursion_task(a, b, n = 0):
+    if a == b:
+        return n + 1
+    if a < b:
+        return recursion_task(a, b - a, n + 1)
+    print("a =", a - (a - b), ", b =", b)
+    return recursion_task(a - b, b, n + 1)
+
+
+def squares(a, b, n=0, cnt=0):
+    chars = list('abcdefg')
+    lst = [list('0' * a) for i in range(b)]
+    for i in range(a - (a - b)):
+            for j in range(b):
+                lst[i][j] = str(chars[cnt])
+    
+
+    if a == b:
+        return n + 1
+    if a < b:
+        cnt += 1
+        return squares(a, b - a, n + 1, cnt)
+
+    for i in lst:
+        print(*i)
+    print("a =", a - (a - b), ", b =", b)
+   
+    return recursion_task(a - b, b, n + 1)
+    
+
 def bubble_sort(lst):
     for i in range(len(lst)-1):
         for j in range(len(lst)-i-1):
