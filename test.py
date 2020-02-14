@@ -11,25 +11,39 @@ def main():
     #print("Bubble Sort:", *bubble_sort(lists[0]))
     #print("Insertion Sort:", *insertion_sort(lists[1]))
     #print("Quick Sort:", *quick_sort(lists[2]))
-    print("Squares:", squares(11, 3) - 1)
-    
+    #print("Squares:", recursion_task(int(input("Enter a: ")), int(input("Enter b: ")) - 1))
+    result = list(to_quadrats(int(input("Длина:  ")) * int(input("Ширина: "))))
+    print(result)
+
+def to_quadrats(area):
+    if area == 0:
+        raise StopIteration
+    while(area):
+        for i in range(area, 0, -1):
+            if i * i <= area:
+                area -= i * i
+                yield i
+                break
+        to_quadrats(area)
+
+
+
 def recursion_task(a, b, n = 0):
     if a == b:
         return n + 1
     if a < b:
         return recursion_task(a, b - a, n + 1)
-    print("a =", a - (a - b), ", b =", b)
+    print("a =", a - b, ", b =", b)
     return recursion_task(a - b, b, n + 1)
 
 
 def squares(a, b, n=0, cnt=0):
     chars = list('abcdefg')
     lst = [list('0' * a) for i in range(b)]
-    for i in range(a - (a - b)):
+    for i in range(a):
             for j in range(b):
                 lst[i][j] = str(chars[cnt])
     
-
     if a == b:
         return n + 1
     if a < b:
