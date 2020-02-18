@@ -3,6 +3,7 @@ import random
 import math
 import matplotlib.pyplot as plt
 import os
+import base64
 
 def main():
     #lists = [[random.randint(0, 100) for i in range(10)] for i in range(3)]
@@ -12,49 +13,121 @@ def main():
     #print("Insertion Sort:", *insertion_sort(lists[1]))
     #print("Quick Sort:", *quick_sort(lists[2]))
     #print("Squares:", recursion_task(int(input("Enter a: ")), int(input("Enter b: ")) - 1))
-    result = list(to_quadrats(int(input("Длина:  ")) * int(input("Ширина: "))))
-    print(result)
+    print(recursion_task0(int(input("Length: ")), int(input("Width: "))))
+    #print(lst)
 
-def to_quadrats(area):
-    if area == 0:
-        raise StopIteration
-    while(area):
-        for i in range(area, 0, -1):
-            if i * i <= area:
-                area -= i * i
-                yield i
-                break
-        to_quadrats(area)
-
-
-
-def recursion_task(a, b, n = 0):
-    if a == b:
-        return n + 1
+def recursion_task(a, b, n=0, prev_b=0, prev_a=0, lst = [], empt_lst = []):
+    if n == 0:
+        empt_lst = [list('0' * a) for i in range(b)]
+    if prev_b - a == 0:    
+        lst.append(prev_a - b)
+        print("Cut: ", prev_a - b, "x", prev_a - b, a, b, prev_a, prev_b)
+    if prev_a - b == 0:
+        lst.append(prev_b - a)
+        print("Cut: ", prev_b - a,"x", prev_b - a, a, b, prev_a, prev_b)
     if a < b:
-        return recursion_task(a, b - a, n + 1)
-    print("a =", a - b, ", b =", b)
-    return recursion_task(a - b, b, n + 1)
-
-
-def squares(a, b, n=0, cnt=0):
-    chars = list('abcdefg')
-    lst = [list('0' * a) for i in range(b)]
-    for i in range(a):
-            for j in range(b):
-                lst[i][j] = str(chars[cnt])
-    
+        return recursion_task(a, b - a, n + 1, a, b, empt_lst=empt_lst)
     if a == b:
+        lst.append(a)
+        print("Cut: ", a, "x", a, a, b, prev_a, prev_b)
+        draw(lst, empt_lst)
         return n + 1
-    if a < b:
-        cnt += 1
-        return squares(a, b - a, n + 1, cnt)
+    return recursion_task(a - b, b, n + 1, a, b, empt_lst=empt_lst)
 
-    for i in lst:
+def recursion_task0(a, b, n=0, prev_b=0, prev_a=0, lst = [], empt_lst = [], b64 = []):
+    if n == 0:
+        empt_lst = [list('0' * a) for i in range(b)]
+        b64 = [chr(i) for i in range(65,91)] + [chr(i) for i in range(97,123)] + ['+', '/']
+    if prev_b - a == 0:    
+        lst.append(prev_a - b)
+        print("Cut: ", prev_a - b, "x", prev_a - b, a, b, prev_a, prev_b)
+    if prev_a - b == 0:
+        lst.append(prev_b - a)
+        print("Cut: ", prev_b - a,"x", prev_b - a, a, b, prev_a, prev_b)
+    if a < b:
+        return recursion_task0(a, b - a, n + 1, a, b, empt_lst=empt_lst, b64=b64)
+    if a == b:
+        lst.append(a)
+        print("Cut: ", a, "x", a, a, b, prev_a, prev_b)
+        show(lst, empt_lst)
+        return n + 1
+    return recursion_task0(a - b, b, n + 1, a, b, empt_lst=empt_lst, b64=b64)
+
+
+def draw(lst, empt):
+    b64 = [chr(i) for i in range(65,91)] + [chr(i) for i in range(97,123)] + ['+', '/']
+    print(b64[0])
+    cnt = 0
+    num = 0
+    check = 0
+    k = 0
+    try:
+        for n in range(len(lst)):
+            #if lst[n] == 1:
+            #    break
+            if check + 1 == len(empt[0]):
+                st = i+1
+                for k in range(st, st + lst[n]):
+                    for l in range(check + 1 - lst[n-1], check + 1 - lst[n-1] + lst[n]):
+                        empt[k][l] = b64[cnt]
+                check = l
+                j = l
+                i = k
+            else:
+                for i in range(k, lst[n]):
+                    for j in range(num, num + lst[n]):
+                        empt[i][j] = b64[cnt]
+                check = j
+                num += lst[n]
+            print('c', cnt)
+            cnt += 1   
+        
+        for i in range(len(empt)):
+            for j in range(len(empt[i])):
+                if empt[i][j] == '0':
+                    print('cnt', cnt)
+                    empt[i][j] = b64[cnt]
+                    cnt+=1
+                    
+    except:
+        #print('except:', i+n, j-n)
+        #while True:
+        #    for k in range(j-n, j):
+        #        for l in range(i+n, i+n+n):
+        #            empt[l][k] = chars[cnt]
+        #    cnt+=1
+        #    i+=n
+            
+        #for i in range(len(empt)):
+        #   for j in range(len(empt[i])):
+        #        if empt[i][j] == '0':
+        #            empt[i][j] = chars[cnt]
+        #            cnt += 1
+        print("Exception:", i, j)
+    for i in empt:
         print(*i)
-    print("a =", a - (a - b), ", b =", b)
-   
-    return recursion_task(a - b, b, n + 1)
+
+def show(lst, empt):
+    b64 = [chr(i) for i in range(65,91)] + [chr(i) for i in range(97,123)] + ['+', '/']
+    start_pos = 0
+    cnt = -1
+    check = False
+    for size in lst:
+        for i in range(len(empt)):
+            for j in range(len(empt[i])):
+                if empt[i][j] == '0':
+                    start_pos = [i, j]
+                    cnt += 1
+                    check = True
+                    break
+            if check:
+                check = False
+                break
+        for i in range(start_pos[0], start_pos[0]+lst[cnt]):
+            for j in range(start_pos[1], start_pos[1]+lst[cnt]):
+                empt[i][j] = b64[cnt]
+    for i in empt:
+        print(*i)
     
 
 def bubble_sort(lst):
