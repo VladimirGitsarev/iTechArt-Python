@@ -13,8 +13,10 @@ def main():
     #print("Insertion Sort:", *insertion_sort(lists[1]))
     #print("Quick Sort:", *quick_sort(lists[2]))
     #print("Squares:", recursion_task(int(input("Enter a: ")), int(input("Enter b: ")) - 1))
-    print(recursion_task0(int(input("Length: ")), int(input("Width: "))))
+    #print(recursion_task0(int(input("Length: ")), int(input("Width: "))))
     #print(lst)
+    nums = list(0, 1, 1)
+    print(nums)
 
 def recursion_task(a, b, n=0, prev_b=0, prev_a=0, lst = [], empt_lst = []):
     if n == 0:
@@ -282,6 +284,44 @@ def task2():
         p += p * per
         i += 1
         print('p =', p, "\nday:",  i)
+
+def tri():
+    cout = 0
+    prev1 = 1
+    prev2 = 1
+    prev3 = 1
+    now = prev1 + prev2 + prev3
+    a = int(input())
+    if a == 1:
+        print(prev1)
+        cout += 1
+    elif a == 2:
+        print(prev1)
+        cout += 1
+        print(prev2)
+        cout += 1
+    else:
+        print(prev1)
+        cout += 1
+        print(prev2)
+        cout += 1
+        print(prev3)
+        cout += 1
+    while True:
+        if a == 1:
+            break
+        elif a == 2:
+            break
+        elif a == 3:
+            break
+        print(now)
+        cout += 1
+        if cout >= a:
+            break
+        prev1 = prev2
+        prev2 = prev3
+        prev3 = now
+        now = prev1 + prev2 + prev3
 
 if __name__ == "__main__":
     main()
