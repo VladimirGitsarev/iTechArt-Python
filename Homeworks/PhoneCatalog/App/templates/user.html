@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User: {{user.name}}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'user.css' %}" />
+</head>
+<body>
+    <div>
+        <a href="/catalog/"><h1>Phone Catalog</h1></a>
+    </div>
+    <div class="user-block">
+        <img src="{% static 'img/icon.png' %}" alt="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1024px-Circle-icons-profile.svg.png">
+        
+            <div class="left">
+                <p>User ID: </p>
+                <p>Name: </p>
+                <p>Registration date: </p>
+                <p>Address: </p>
+                <p>Phone: </p>
+            </div>
+            <div class="right">
+                <p>{{user.id}}</p>
+                <p>{{user.name}}</p>
+                <p>{{user.reg_date}}</p>
+                <p>{{user.address}}</p>
+                <p>{{user.phone}}</p>
+            </div>
+        
+    </div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}" />
+</head>
+<body>
+
+
+<h1>Available Riddles</h1>
+{% if message %}
+    <p><strong>{{ message }}</strong></p>
+{% endif %}
+{% if latest_riddles %}
+    <ul>
+        {% for riddle in latest_riddles %}
+            <li>
+                <a href="/riddles/{{ riddle.id }}/">
+                    {{ riddle.riddle_text }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No riddles are available right now.</p>
+{% endif %}
+</body>
+</html>

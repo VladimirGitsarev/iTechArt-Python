@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Phone Catalog</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}" />
+</head>
+<body>
+    <div>
+        <a href="/catalog/"><h1>Phone Catalog</h1></a>
+    </div>
+    <h2>All users:</h2>
+{% if catalog %}
+    <ol class="rounded">
+        {% for el in catalog %}
+            <li>
+                <a style="text-decoration: none;" href="/catalog/{{ el.id }}/">
+                    <span>{{ el.name }}</span>
+                </a>
+            </li>
+        {% endfor %}
+    </ol>
+{% else %}
+    <p>No users are available right now.</p>
+{% endif %}
+</body>
+</html>

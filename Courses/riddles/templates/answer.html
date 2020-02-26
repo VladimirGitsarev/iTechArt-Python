@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}" />
+</head>
+<body>
+
+
+
+<h1>{{ riddle.riddle_text }}</h1>
+<p>    <strong>{{ method }}</strong>    </p>
+{% if error_message %}
+    <p>
+        <strong>{{ error_message }}</strong>
+    </p>
+{% endif %}
+<form action="answer/" method="post">
+    {% csrf_token %}
+    {% for option in riddle.option_set.all %}
+        <input type="radio" name="option" id="option{{ forloop.counter }}" value="{{ option.id }}" />
+        <label for="option{{ forloop.counter }}">
+            {{ option.text }}
+        </label><br>
+    {% endfor %}
+    <input type="submit" value="Answer" />
+</form>
+</body>
+</html>
